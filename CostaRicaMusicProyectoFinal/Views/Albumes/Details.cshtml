@@ -1,0 +1,39 @@
+@model AlbumDto
+@{
+    ViewData["Title"] = "Álbum";
+}
+<div class="card shadow-sm border-0 mb-4">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src="@Model.PortadaUrl" class="img-fluid h-100 object-fit-cover rounded-start cover-art" alt="@Model.Titulo" />
+        </div>
+        <div class="col-md-8">
+            <div class="card-body p-4 p-lg-5">
+                <div class="section-chip mb-3">Detalle de álbum</div>
+                <h2>@Model.Titulo</h2>
+                <p><strong>Artista:</strong> <a asp-controller="Artistas" asp-action="Details" asp-route-id="@Model.IdArtista">@Model.Artista</a></p>
+                <p><strong>Año:</strong> @Model.Anio</p>
+                <p class="text-muted">Canciones incluidas</p>
+                <ul class="list-group list-group-flush mt-3">
+                    @foreach (var song in Model.Canciones)
+                    {
+                        <li class="list-group-item d-flex justify-content-between align-items-center gap-3">
+                            <div>
+                                <div class="fw-semibold">@song.Nombre</div>
+                                <div class="small text-muted">@song.Duracion</div>
+                            </div>
+                            <button type="button" class="btn btn-dark btn-sm play-song"
+                                    data-id="@song.IdCancion"
+                                    data-title="@song.Nombre"
+                                    data-artist="@song.Artista"
+                                    data-audio="@song.AudioUrl"
+                                    data-cover="@song.ImagenUrl">
+                                Reproducir
+                            </button>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

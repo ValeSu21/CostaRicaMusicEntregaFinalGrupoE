@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Costa Rica Music</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
+            <div class="container">
+                <a class="navbar-brand fw-semibold" asp-controller="Canciones" asp-action="Index">
+                    <span class="brand-mark"></span>Costa Rica Music
+                </a>
+                @if (User.Identity?.IsAuthenticated ?? false)
+                {
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="menuNav">
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item"><a class="nav-link" asp-controller="Canciones" asp-action="Index">Canciones</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-controller="Playlists" asp-action="Index">Playlists</a></li>
+                        </ul>
+                        <span class="navbar-text me-3 text-light-emphasis">@User.Identity?.Name</span>
+                        <a class="btn btn-outline-light btn-sm" asp-controller="Login" asp-action="Logout">Cerrar sesión</a>
+                    </div>
+                }
+            </div>
+        </nav>
+    </header>
+
+    <main class="container py-4 pb-player page-shell">
+        @if (TempData["SuccessMessage"] is string message)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @message
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
+            </div>
+        }
+
+        @RenderBody()
+    </main>
+
+    @if (User.Identity?.IsAuthenticated ?? false)
+    {
+        <div id="globalPlayer" class="player-bar">
+            <div class="container d-flex flex-column flex-lg-row align-items-center gap-3 py-3">
+                <div class="d-flex align-items-center gap-3 flex-grow-1 min-w-0">
+                    <img id="playerCover" src="/media/images/canciones/default-cover.svg" alt="cover" class="cover rounded" />
+                    <div class="min-w-0">
+                        <div id="playerTitle" class="fw-bold text-truncate">Selecciona una canción</div>
+                        <div id="playerSubtitle" class="small text-light-emphasis text-truncate">El reproductor seguirá activo mientras navegas.</div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <button class="btn btn-outline-light btn-sm" id="btnPrev" type="button">Anterior</button>
+                    <button class="btn btn-dark btn-sm" id="btnPlayPause" type="button">Play</button>
+                    <button class="btn btn-outline-light btn-sm" id="btnNext" type="button">Siguiente</button>
+                </div>
+                <audio id="audioPlayer" controls class="w-100 w-lg-auto"></audio>
+            </div>
+        </div>
+    }
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/player.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

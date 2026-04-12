@@ -1,0 +1,112 @@
+@model LoginDto
+@{
+    ViewData["Title"] = "Iniciar sesión";
+}
+
+<div class="login-page position-relative overflow-hidden">
+    <div class="login-orb orb-1"></div>
+    <div class="login-orb orb-2"></div>
+    <div class="login-orb orb-3"></div>
+
+    <div class="container py-5">
+        <div class="row align-items-center justify-content-center min-vh-100 g-4">
+
+            <div class="col-lg-6 d-none d-lg-block">
+                <div class="login-hero pe-lg-4">
+                    <div class="section-chip mb-3">Grupo E Proyecto Final</div>
+                    <h1 class="display-5 fw-bold mb-3 login-title">
+                        Costa Rica Music
+                    </h1>
+                    <p class="login-subtitle mb-4">
+                        Explora artistas, álbumes, canciones y playlists en una experiencia visual
+                        inspirada en la ciencia ficción, con una interfaz moderna, inmersiva y llena de energía.
+                    </p>
+
+                    <div class="hero-info-grid">
+                        <div class="hero-info-card">
+                            <span class="hero-info-label">Catálogo demo</span>
+                            <h5 class="mb-1">Artistas reconocidos</h5>
+                            <p class="mb-0">
+                                Harry Styles, System of a Down, Soda Stereo, Beyoncé,
+                                Tyler, The Creator y Bad Bunny.
+                            </p>
+                        </div>
+
+                        <div class="hero-info-card">
+                            <span class="hero-info-label">Experiencia</span>
+                            <h5 class="mb-1">Reproductor integrado</h5>
+                            <p class="mb-0">
+                                Navega entre pantallas manteniendo la reproducción y administra playlists fácilmente.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-4 col-lg-5 col-md-8 col-sm-10">
+                <div class="card border-0 shadow-lg login-panel">
+                    <div class="card-body p-4 p-lg-5">
+
+                        <div class="d-lg-none mb-3">
+                            <div class="section-chip mb-3">Project Hail Mary Inspired UI</div>
+                            <h2 class="fw-bold mb-2 login-title-sm">Costa Rica Music</h2>
+                            <p class="login-subtitle mb-0">
+                                Accede a tu catálogo demo con una interfaz futurista y pulida.
+                            </p>
+                        </div>
+
+                        <div class="mb-4">
+                            <h3 class="mb-1 fw-semibold">Iniciar sesión</h3>
+                            <p class="text-light-emphasis mb-0">
+                                Ingresa tus credenciales para continuar.
+                            </p>
+                        </div>
+
+                        <form asp-action="Index" method="post" novalidate>
+                            @Html.AntiForgeryToken()
+
+                            <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 small mb-3"></div>
+
+                            <div class="mb-3">
+                                <label asp-for="Email" class="form-label text-light"></label>
+                                <input asp-for="Email" class="form-control login-input" placeholder="correo@ejemplo.com" autocomplete="username" />
+                                <span asp-validation-for="Email" class="text-danger small"></span>
+                            </div>
+
+                            <div class="mb-4">
+                                <label asp-for="Password" class="form-label text-light"></label>
+                                <input asp-for="Password" type="password" class="form-control login-input" placeholder="••••••••" autocomplete="current-password" />
+                                <span asp-validation-for="Password" class="text-danger small"></span>
+                            </div>
+
+                            <button type="submit" class="btn login-btn w-100">
+                                Ingresar
+                            </button>
+                        </form>
+
+                        <div class="login-divider my-4"></div>
+
+                        <div class="demo-access">
+                            <div class="demo-access-title mb-2">Credenciales de prueba</div>
+
+                            <div class="demo-access-card mb-2">
+                                <div class="demo-access-role">Administrador</div>
+                                <div class="demo-access-data">admin@crmusic.com / Admin123!</div>
+                            </div>
+
+                            <div class="demo-access-card">
+                                <div class="demo-access-role">Usuario</div>
+                                <div class="demo-access-data">user@crmusic.com / User123!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

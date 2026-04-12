@@ -1,0 +1,103 @@
+@model PagedResultDto<CancionDto>
+@{
+    ViewData["Title"] = "Canciones";
+    var playlists = ViewBag.Playlists as List<PlaylistDto> ?? new List<PlaylistDto>();
+}
+<div class="page-hero">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <div>
+            <div class="section-chip mb-2">Catálogo demo internacional</div>
+            <h2 class="mb-1">Canciones destacadas</h2>
+            <small class="text-muted">Audios de prueba con artistas, álbumes e imágenes renovadas.</small>
+        </div>
+    </div>
+</div>
+
+<form method="get" class="row g-2 mb-4">
+    <div class="col-md-8">
+        <input type="text" name="search" value="@Model.Search" class="form-control" placeholder="Buscar por nombre de canción" />
+    </div>
+    <div class="col-md-2 d-grid">
+        <button class="btn btn-dark" type="submit">Buscar</button>
+    </div>
+    <div class="col-md-2 d-grid">
+        <a class="btn btn-outline-secondary" asp-action="Index">Limpiar</a>
+    </div>
+</form>
+
+@if (!Model.Items.Any())
+{
+    <div class="alert alert-secondary">No se encontraron canciones con ese criterio de búsqueda.</div>
+}
+else
+{
+    <div class="row g-4">
+        @foreach (var item in Model.Items)
+        {
+            <div class="col-md-6">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="@item.ImagenUrl" class="card-img-top song-cover" alt="@item.Nombre" />
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-start gap-3 mb-2">
+                            <div>
+                                <h5 class="card-title mb-1">@item.Nombre</h5>
+                                <p class="mb-1">
+                                    <a asp-controller="Artistas" asp-action="Details" asp-route-id="@item.IdArtista">@item.Artista</a>
+                                </p>
+                                <p class="mb-0 text-muted">
+                                    <a asp-controller="Albumes" asp-action="Details" asp-route-id="@item.IdAlbum">@item.Album</a>
+                                </p>
+                            </div>
+                            <span class="badge text-bg-light">@item.Duracion</span>
+                        </div>
+                    </div>
+                    <div class="card-footer border-0 pt-0 pb-4 px-4">
+                        <div class="d-flex flex-wrap gap-2 align-items-center">
+                            <button type="button" class="btn btn-dark btn-sm play-song"
+                                    data-id="@item.IdCancion"
+                                    data-title="@item.Nombre"
+                                    data-artist="@item.Artista"
+                                    data-audio="@item.AudioUrl"
+                                    data-cover="@item.ImagenUrl">
+                                Reproducir
+                            </button>
+
+                            @if (playlists.Any())
+                            {
+                                <form method="post" asp-action="AgregarAPlaylist" class="d-flex gap-2 flex-wrap">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="songId" value="@item.IdCancion" />
+                                    <select name="playlistId" class="form-select form-select-sm">
+                                        @foreach (var playlist in playlists)
+                                        {
+                                            <option value="@playlist.IdPlaylist">@playlist.Nombre</option>
+                                        }
+                                    </select>
+                                    <button type="submit" class="btn btn-outline-light btn-sm">Agregar</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <a asp-controller="Playlists" asp-action="Create" class="btn btn-outline-light btn-sm">Crear playlist</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@if (Model.TotalPages > 1)
+{
+    <nav class="mt-4">
+        <ul class="pagination">
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.Page ? "active" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-page="@i" asp-route-search="@Model.Search">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}

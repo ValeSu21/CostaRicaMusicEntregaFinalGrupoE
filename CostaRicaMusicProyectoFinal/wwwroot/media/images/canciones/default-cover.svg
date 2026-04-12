@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#07110d"/>
+      <stop offset="55%" stop-color="#112218"/>
+      <stop offset="100%" stop-color="#9dff00"/>
+    </linearGradient>
+    <radialGradient id="orb" cx="78%" cy="34%" r="45%">
+      <stop offset="0%" stop-color="#ff9f1a" stop-opacity="0.9"/>
+      <stop offset="60%" stop-color="#ff9f1a" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#ff9f1a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="800" fill="url(#bg)"/>
+  <circle cx="620" cy="260" r="220" fill="url(#orb)"/>
+  <g fill="none" stroke="#e8ffd1" opacity="0.26">
+    <path d="M30,200 C160,100 280,190 390,120 S600,80 770,190" stroke-width="14"/>
+    <path d="M20,290 C180,160 300,290 430,225 S630,180 790,290" stroke-width="9"/>
+    <path d="M35,360 C190,250 340,360 470,298 S650,260 780,350" stroke-width="7"/>
+  </g>
+  <circle cx="230" cy="500" r="150" fill="#0c1712" opacity="0.85" stroke="#d8ff2e33"/>
+  <circle cx="230" cy="500" r="76" fill="#9dff00" opacity="0.8"/>
+  <circle cx="230" cy="500" r="16" fill="#07110d"/>
+  <text x="86" y="690" fill="#f5f9ed" font-family="Segoe UI, Arial, sans-serif" font-size="72" font-weight="800">Selecciona</text>
+  <text x="86" y="760" fill="#f5f9ed" font-family="Segoe UI, Arial, sans-serif" font-size="72" font-weight="800">una canción</text>
+</svg>
